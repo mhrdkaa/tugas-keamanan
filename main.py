@@ -181,6 +181,35 @@ def send_message():
         return jsonify({'error': str(e)}), 400
 
 
+@app.route('/api/message/decrypt', methods=['POST'])
+def decrypt_message():
+    """
+    Decrypt an encrypted message using the server's private key.
+    Demo/educational endpoint — shows hybrid decryption process.
+
+    POST /api/message/decrypt
+    {
+        "encrypted_data": { ciphertext, encrypted_aes_key, nonce, tag }
+    }
+    """
+    data = request.get_json()
+    encrypted_data = data.get('encrypted_data')
+
+    if not encrypted_data:
+        return jsonify({'error': 'Missing encrypted_data'}), 400
+
+    try:
+        plaintext = HybridEncryptor.decrypt(encrypted_data, auth_server.private_key)
+
+        return jsonify({
+            'status': 'success',
+            'decrypted_message': plaintext,
+            'note': 'Decrypted using RSA-4096 private key + AES-256-GCM',
+        }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
 @app.route('/api/keys/public', methods=['GET'])
 def get_public_key():
     """

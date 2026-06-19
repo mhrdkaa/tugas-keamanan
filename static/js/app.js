@@ -2,6 +2,9 @@
 
 const API_BASE = '';
 
+// Stores the last encrypted response for decryption
+let lastEncryptedResponse = null;
+
 // Utility: Show alert message
 function showAlert(elementId, message, type = 'success') {
     const alertEl = document.getElementById(elementId);
@@ -142,21 +145,34 @@ document.getElementById('messageForm')?.addEventListener('submit', async (e) => 
         
         if (response.ok) {
             showAlert('messageAlert', 'Message sent and encrypted successfully!', 'success');
-            
+
+            // Store encrypted data for later decryption
+            lastEncryptedResponse = data.encrypted_response;
+
+            // Reset decrypt section on new message
+            const decryptedResult = document.getElementById('decryptedResult');
+            if (decryptedResult) decryptedResult.style.display = 'none';
+            const decryptBtn = document.getElementById('decryptBtn');
+            if (decryptBtn) {
+                decryptBtn.textContent = '🔓 Dekripsi Pesan';
+                decryptBtn.disabled = false;
+                decryptBtn.style.opacity = '1';
+            }
+
             // Display encrypted response
             const encryptedDiv = document.getElementById('encryptedResponse');
             const encryptedDataDiv = document.getElementById('encryptedData');
-            
+
             if (encryptedDiv && encryptedDataDiv) {
                 encryptedDataDiv.innerHTML = `
-                    <p><strong>Encrypted Key:</strong> ${data.encrypted_response.encrypted_aes_key.substring(0, 80)}...</p>
+                    <p><strong>Encrypted AES Key:</strong> ${data.encrypted_response.encrypted_aes_key.substring(0, 80)}...</p>
                     <p><strong>Ciphertext:</strong> ${data.encrypted_response.ciphertext.substring(0, 80)}...</p>
                     <p><strong>Nonce:</strong> ${data.encrypted_response.nonce}</p>
                     <p><strong>Tag:</strong> ${data.encrypted_response.tag}</p>
                 `;
                 encryptedDiv.style.display = 'block';
             }
-            
+
             // Clear form
             document.getElementById('messageText').value = '';
         } else {
@@ -204,6 +220,60 @@ async function verifyToken() {
         }
     } catch (error) {
         alert('Connection error. Please try again.');
+    }
+}
+
+// Decrypt Last Encrypted Message
+async function decryptLastMessage() {
+    if (!lastEncryptedResponse) {
+        alert('Belum ada pesan terenkripsi. Kirim pesan dulu!');
+        return;
+    }
+
+    const btn = document.getElementById('decryptBtn');
+    if (btn) {
+        btn.textContent = '⏳ Mendekripsi...';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/api/message/decrypt`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ encrypted_data: lastEncryptedResponse })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            document.getElementById('decryptedText').textContent = data.decrypted_message;
+            document.getElementById('decryptNote').textContent = `ℹ️ ${data.note}`;
+            document.getElementById('decryptedResult').style.display = 'block';
+
+            if (btn) {
+                btn.textContent = '✅ Berhasil Didekripsi';
+                btn.style.background = 'linear-gradient(135deg, rgba(16,185,129,0.3), rgba(16,185,129,0.15))';
+                btn.style.borderColor = 'rgba(16,185,129,0.5)';
+            }
+
+            // Scroll to result
+            document.getElementById('decryptedResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            alert(`Gagal dekripsi: ${data.error}`);
+            if (btn) {
+                btn.textContent = '🔓 Dekripsi Pesan';
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
+    } catch (error) {
+        alert('Connection error saat dekripsi. Coba lagi.');
+        if (btn) {
+            btn.textContent = '🔓 Dekripsi Pesan';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        }
     }
 }
 
