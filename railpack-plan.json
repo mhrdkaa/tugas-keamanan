@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "name": "CryptoAuth Build",
+  "description": "Build and test CryptoAuth hybrid encryption system",
+  "stages": [
+    {
+      "name": "prepare",
+      "description": "Prepare build environment",
+      "steps": [
+        {
+          "name": "install-python",
+          "description": "Install Python 3.11.8 via mise",
+          "command": "mise install python@3.11.8"
+        }
+      ]
+    },
+    {
+      "name": "dependencies",
+      "description": "Install project dependencies",
+      "steps": [
+        {
+          "name": "install-packages",
+          "description": "Install Python packages from requirements.txt",
+          "command": "pip install -r requirements.txt"
+        }
+      ]
+    },
+    {
+      "name": "build",
+      "description": "Build artifacts",
+      "steps": [
+        {
+          "name": "verify-imports",
+          "description": "Verify all modules can be imported",
+          "command": "python -c \"from crypto_auth import AESManager, RSAManager, HybridEncryptor, AuthServer, AuthClient, SecureChannel; print('All imports successful')\""
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "description": "Run tests and demo",
+      "steps": [
+        {
+          "name": "run-demo",
+          "description": "Run comprehensive demo covering all 6 scenarios",
+          "command": "python demo.py"
+        }
+      ]
+    }
+  ],
+  "environment": {
+    "python_version": "3.11.8",
+    "mise_settings": {
+      "python.github_attestations": false
+    }
+  },
+  "artifacts": {
+    "description": "Build artifacts and outputs",
+    "paths": [
+      "*.pyc",
+      "__pycache__"
+    ]
+  }
+}
