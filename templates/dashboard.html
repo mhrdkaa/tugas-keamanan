@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Dashboard - CryptoAuth</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
     <div class="container">
 
@@ -17,8 +19,10 @@
                 CryptoAuth
             </div>
             <div class="nav-links">
-                <span id="usernameDisplay" style="font-size: 0.875rem; color: var(--text-sub); font-weight: 500;"></span>
-                <button onclick="logout()" class="btn btn-secondary" style="padding: 0.4rem 0.875rem; font-size: 0.8125rem;">Logout</button>
+                <span id="usernameDisplay"
+                    style="font-size: 0.875rem; color: var(--text-sub); font-weight: 500;"></span>
+                <button onclick="logout()" class="btn btn-secondary"
+                    style="padding: 0.4rem 0.875rem; font-size: 0.8125rem;">Logout</button>
             </div>
         </nav>
 
@@ -44,14 +48,8 @@
                 <form id="messageForm">
                     <div class="form-group">
                         <label class="form-label" for="messageText">Isi Pesan</label>
-                        <textarea
-                            class="form-input"
-                            id="messageText"
-                            rows="4"
-                            placeholder="Ketik pesan di sini..."
-                            required
-                            style="resize: vertical; min-height: 90px;"
-                        ></textarea>
+                        <textarea class="form-input" id="messageText" rows="4" placeholder="Ketik pesan di sini..."
+                            required style="resize: vertical; min-height: 90px;"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-full">
                         <span id="sendBtnText">Kirim & Enkripsi</span>
@@ -64,8 +62,8 @@
                     <p class="section-label">Response Server (Terenkripsi)</p>
                     <div id="encryptedData" class="mono-block" style="max-height: 180px; overflow-y: auto;"></div>
 
-                    <button onclick="decryptLastMessage()" id="decryptBtn"
-                        class="btn btn-secondary btn-full" style="margin-top: 0.75rem;">
+                    <button onclick="decryptLastMessage()" id="decryptBtn" class="btn btn-secondary btn-full"
+                        style="margin-top: 0.75rem;">
                         Dekripsi Pesan
                     </button>
 
@@ -85,7 +83,8 @@
                             <div class="label">Isi Pesan (Decrypted)</div>
                             <div id="decryptedText" class="value"></div>
                         </div>
-                        <p id="decryptNote" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;"></p>
+                        <p id="decryptNote" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        </p>
                     </div>
                 </div>
             </div>
@@ -146,7 +145,7 @@
         </div>
 
         <!-- Private Key -->
-        <div class="card danger-card" style="margin-top: 1.25rem;">
+        <!-- <div class="card danger-card" style="margin-top: 1.25rem;">
             <div class="card-header">
                 <h2 class="card-title" style="display: flex; align-items: center; gap: 0.5rem;">
                     Private Key Server <span class="secret-tag">SECRET</span>
@@ -185,7 +184,7 @@
                     <pre id="privateKeyPem" class="mono-block" style="max-height: 300px; overflow-y: auto; border-color: #fca5a5;"></pre>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- API Links -->
         <div class="card" style="margin-top: 1.25rem;">
@@ -201,7 +200,8 @@
         </div>
 
         <!-- Footer -->
-        <footer style="padding: 1.5rem 0; color: var(--text-muted); font-size: 0.8125rem; border-top: 1px solid var(--border); margin-top: 1.5rem;">
+        <footer
+            style="padding: 1.5rem 0; color: var(--text-muted); font-size: 0.8125rem; border-top: 1px solid var(--border); margin-top: 1.5rem;">
             CryptoAuth v1.0.0 &mdash; Token berlaku 1 jam
         </footer>
 
@@ -242,4 +242,5 @@
     </script>
     <script src="/static/js/app.js"></script>
 </body>
+
 </html>
