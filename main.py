@@ -2,7 +2,7 @@
 CryptoAuth API Server - Simple Flask app for Railway deployment
 Demonstrates authentication + encrypted messaging
 """
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 from crypto_auth import AuthServer, AuthClient, HybridEncryptor
 
@@ -14,6 +14,27 @@ auth_server = AuthServer("cryptoauth-api-v1")
 # Register demo users
 auth_server.register_user("alice", "alice_secret_123")
 auth_server.register_user("bob", "bob_secret_456")
+
+
+# ============================================================================
+# UI ROUTES - Web Interface
+# ============================================================================
+
+@app.route('/', methods=['GET'])
+def index():
+    """Landing page with login/register."""
+    return render_template('index.html')
+
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    """User dashboard after authentication."""
+    return render_template('dashboard.html')
+
+
+# ============================================================================
+# API ROUTES - REST Endpoints
+# ============================================================================
 
 
 @app.route('/health', methods=['GET'])
