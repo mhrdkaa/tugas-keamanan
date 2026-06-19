@@ -106,7 +106,6 @@
             </div>
         </div>
 
-        <!-- Server Info Section -->
         <div class="card" style="margin-bottom: 3rem;">
             <div class="card-header">
                 <h2 class="card-title">🔑 Server Public Key</h2>
@@ -130,6 +129,55 @@
                     <div>
                         <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Public Key (PEM)</p>
                         <pre id="publicKeyPem" style="font-family: monospace; font-size: 0.75rem; color: var(--text-secondary); background: rgba(0, 0, 0, 0.5); padding: 1rem; border-radius: 8px; overflow-x: auto; max-height: 200px;"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Server Private Key Section -->
+        <div class="card" style="margin-bottom: 3rem; border-color: rgba(239, 68, 68, 0.4); background: linear-gradient(135deg, rgba(239, 68, 68, 0.07), rgba(139, 92, 246, 0.07));">
+            <div class="card-header">
+                <h2 class="card-title" style="color: #f87171;">🔓 Server Private Key</h2>
+                <p class="card-subtitle">RSA-4096 private key — untuk keperluan demonstrasi akademik</p>
+            </div>
+
+            <!-- Academic Warning Banner -->
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 10px; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.5rem; flex-shrink: 0;">⚠️</span>
+                <div>
+                    <p style="font-weight: 700; color: #f87171; margin-bottom: 0.25rem; font-size: 0.9rem;">PERINGATAN — Demo Akademik</p>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                        Private key <strong>tidak boleh</strong> diekspos di sistem produksi nyata.
+                        Tampilan ini hanya untuk demonstrasi tugas keamanan jaringan.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                <button onclick="fetchPrivateKey()" class="btn btn-primary" id="loadPrivKeyBtn">
+                    🔓 Load Private Key
+                </button>
+                <button onclick="copyPrivateKey()" class="btn btn-secondary" id="copyPrivKeyBtn" style="display: none;">
+                    📋 Copy Private Key
+                </button>
+            </div>
+
+            <div id="privateKeyDisplay" style="display: none;">
+                <div style="padding: 1rem; background: rgba(0, 0, 0, 0.35); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.25);">
+                    <div style="margin-bottom: 1rem;">
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Server ID</p>
+                        <p id="privKeyServerId" style="font-weight: 600; color: #f87171;"></p>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Algorithm</p>
+                        <p id="privKeyAlgorithm" style="font-weight: 600; color: var(--success);"></p>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">Private Key (PEM)</p>
+                            <span style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: rgba(239,68,68,0.2); color: #f87171; border-radius: 4px; font-weight: 600;">SECRET</span>
+                        </div>
+                        <pre id="privateKeyPem" style="font-family: monospace; font-size: 0.72rem; color: #fca5a5; background: rgba(0, 0, 0, 0.6); padding: 1rem; border-radius: 8px; overflow-x: auto; max-height: 300px; overflow-y: auto; border: 1px solid rgba(239,68,68,0.2); white-space: pre-wrap; word-break: break-all;"></pre>
                     </div>
                 </div>
             </div>

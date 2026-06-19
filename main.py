@@ -195,6 +195,23 @@ def get_public_key():
     }), 200
 
 
+@app.route('/api/keys/private', methods=['GET'])
+def get_private_key():
+    """
+    Get server's private RSA key (demo/educational purposes only).
+    WARNING: NEVER expose private keys in a real production system!
+    """
+    from crypto_auth.asymmetric import RSAManager
+    priv_key_pem = RSAManager.private_to_pem(auth_server.private_key).decode('utf-8')
+    
+    return jsonify({
+        'private_key': priv_key_pem,
+        'algorithm': 'RSA-4096',
+        'server_id': auth_server.get_server_id(),
+        'warning': 'DEMO ONLY - Never expose private keys in production!',
+    }), 200
+
+
 @app.route('/api/info', methods=['GET'])
 def info():
     """Get server info."""

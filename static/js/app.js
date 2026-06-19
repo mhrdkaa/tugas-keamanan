@@ -149,7 +149,7 @@ document.getElementById('messageForm')?.addEventListener('submit', async (e) => 
             
             if (encryptedDiv && encryptedDataDiv) {
                 encryptedDataDiv.innerHTML = `
-                    <p><strong>Encrypted Key:</strong> ${data.encrypted_response.encrypted_key.substring(0, 80)}...</p>
+                    <p><strong>Encrypted Key:</strong> ${data.encrypted_response.encrypted_aes_key.substring(0, 80)}...</p>
                     <p><strong>Ciphertext:</strong> ${data.encrypted_response.ciphertext.substring(0, 80)}...</p>
                     <p><strong>Nonce:</strong> ${data.encrypted_response.nonce}</p>
                     <p><strong>Tag:</strong> ${data.encrypted_response.tag}</p>
@@ -223,6 +223,75 @@ async function fetchPublicKey() {
         }
     } catch (error) {
         alert('Connection error. Please try again.');
+    }
+}
+
+// Fetch Private Key (Demo/Academic only)
+async function fetchPrivateKey() {
+    const btn = document.getElementById('loadPrivKeyBtn');
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ Loading...';
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/api/keys/private`);
+        const data = await response.json();
+
+        if (response.ok) {
+            document.getElementById('privKeyServerId').textContent = data.server_id;
+            document.getElementById('privKeyAlgorithm').textContent = data.algorithm;
+            document.getElementById('privateKeyPem').textContent = data.private_key;
+            document.getElementById('privateKeyDisplay').style.display = 'block';
+            document.getElementById('copyPrivKeyBtn').style.display = 'inline-flex';
+
+            if (btn) {
+                btn.textContent = '✅ Private Key Loaded';
+                btn.style.background = 'rgba(16, 185, 129, 0.2)';
+                btn.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+            }
+        } else {
+            alert('Failed to fetch private key');
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = '🔓 Load Private Key';
+            }
+        }
+    } catch (error) {
+        alert('Connection error. Please try again.');
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔓 Load Private Key';
+        }
+    }
+}
+
+// Copy Private Key to Clipboard
+async function copyPrivateKey() {
+    const keyText = document.getElementById('privateKeyPem')?.textContent;
+
+    if (!keyText) {
+        alert('No private key loaded. Please load the private key first.');
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(keyText);
+        const btn = document.getElementById('copyPrivKeyBtn');
+        if (btn) {
+            const original = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = original; }, 2000);
+        }
+    } catch (error) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = keyText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('✅ Private key copied to clipboard!');
     }
 }
 
