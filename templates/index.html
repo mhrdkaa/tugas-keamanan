@@ -1,234 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CryptoAuth - Hybrid Authentication System with AES-256-GCM and RSA-4096">
-    <title>CryptoAuth - Secure Authentication</title>
+    <meta name="description" content="CryptoAuth - Sistem Autentikasi Hybrid AES-256-GCM + RSA-4096">
+    <title>CryptoAuth - Login</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <!-- Animated Background Orbs -->
-    <div class="gradient-orb orb-1"></div>
-    <div class="gradient-orb orb-2"></div>
-    <div class="gradient-orb orb-3"></div>
-
     <div class="container">
-        <!-- Navigation -->
+
+        <!-- Navbar -->
         <nav class="navbar">
             <div class="logo">
-                <div class="logo-icon">🔐</div>
-                <span>CryptoAuth</span>
+                <span class="logo-icon">🔐</span>
+                CryptoAuth
             </div>
             <div class="nav-links">
-                <a href="/api/info" class="nav-link">API Docs</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#auth" class="nav-link">Get Started</a>
+                <a href="/api/info" target="_blank" class="nav-link">API Info</a>
+                <a href="/health" target="_blank" class="nav-link">Health</a>
             </div>
         </nav>
 
-        <!-- Hero Section -->
+        <!-- Hero -->
         <section class="hero">
-            <div class="badge">🔒 AES-256-GCM + RSA-4096</div>
-            <h1>Hybrid Authentication System</h1>
-            <p>Enterprise-grade encryption with symmetric and asymmetric cryptography. Secure your applications with military-grade security.</p>
+            <div class="badge">AES-256-GCM + RSA-4096 + PBKDF2</div>
+            <h1>Sistem Autentikasi Hybrid</h1>
+            <p>Demonstrasi enkripsi simetris & asimetris untuk keamanan komunikasi.</p>
         </section>
 
-        <!-- Auth Section -->
-        <section id="auth" style="margin-bottom: 4rem;">
+        <!-- Auth Forms -->
+        <section id="auth" style="margin-bottom: 2rem;">
             <div class="grid grid-2">
-                <!-- Login Card -->
+
+                <!-- Login -->
                 <div class="card" id="loginCard">
                     <div class="card-header">
-                        <h2 class="card-title">Welcome Back</h2>
-                        <p class="card-subtitle">Sign in to your secure account</p>
+                        <h2 class="card-title">Login</h2>
+                        <p class="card-subtitle">Masuk ke akun Anda</p>
                     </div>
 
                     <div id="loginAlert"></div>
 
                     <form id="loginForm">
                         <div class="form-group">
-                            <label class="form-label">Username</label>
-                            <input 
-                                type="text" 
-                                class="form-input" 
-                                id="loginUsername" 
-                                placeholder="Enter your username"
-                                required
-                            >
+                            <label class="form-label" for="loginUsername">Username</label>
+                            <input type="text" class="form-input" id="loginUsername" placeholder="Username" required>
                         </div>
-
                         <div class="form-group">
-                            <label class="form-label">Password</label>
-                            <input 
-                                type="password" 
-                                class="form-input" 
-                                id="loginPassword" 
-                                placeholder="Enter your password"
-                                required
-                            >
+                            <label class="form-label" for="loginPassword">Password</label>
+                            <input type="password" class="form-input" id="loginPassword" placeholder="Password" required>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-full">
-                            <span id="loginBtnText">Sign In</span>
-                            <span id="loginSpinner" class="spinner" style="display: none;"></span>
+                            <span id="loginBtnText">Masuk</span>
+                            <span id="loginSpinner" class="spinner" style="display:none;"></span>
                         </button>
                     </form>
 
-                    <div style="margin-top: 1.5rem; text-align: center;">
-                        <p style="color: var(--text-muted); font-size: 0.875rem;">
-                            Demo: <code style="color: var(--primary-light);">alice / alice_secret_123</code>
-                        </p>
-                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.8125rem; color: var(--text-muted);">
+                        Demo: <code style="font-family: var(--mono);">alice / alice_secret_123</code>
+                    </p>
                 </div>
 
-                <!-- Register Card -->
+                <!-- Register -->
                 <div class="card" id="registerCard">
                     <div class="card-header">
-                        <h2 class="card-title">Create Account</h2>
-                        <p class="card-subtitle">Join the secure platform</p>
+                        <h2 class="card-title">Daftar Akun</h2>
+                        <p class="card-subtitle">Buat akun baru</p>
                     </div>
 
                     <div id="registerAlert"></div>
 
                     <form id="registerForm">
                         <div class="form-group">
-                            <label class="form-label">Username</label>
-                            <input 
-                                type="text" 
-                                class="form-input" 
-                                id="registerUsername" 
-                                placeholder="Choose a username"
-                                required
-                            >
+                            <label class="form-label" for="registerUsername">Username</label>
+                            <input type="text" class="form-input" id="registerUsername" placeholder="Pilih username" required>
                         </div>
-
                         <div class="form-group">
-                            <label class="form-label">Password</label>
-                            <input 
-                                type="password" 
-                                class="form-input" 
-                                id="registerPassword" 
-                                placeholder="Create a strong password"
-                                required
-                                minlength="8"
-                            >
+                            <label class="form-label" for="registerPassword">Password</label>
+                            <input type="password" class="form-input" id="registerPassword" placeholder="Min. 8 karakter" required minlength="8">
                         </div>
-
                         <div class="form-group">
-                            <label class="form-label">Confirm Password</label>
-                            <input 
-                                type="password" 
-                                class="form-input" 
-                                id="registerPasswordConfirm" 
-                                placeholder="Confirm your password"
-                                required
-                            >
+                            <label class="form-label" for="registerPasswordConfirm">Konfirmasi Password</label>
+                            <input type="password" class="form-input" id="registerPasswordConfirm" placeholder="Ulangi password" required>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-full">
-                            <span id="registerBtnText">Create Account</span>
-                            <span id="registerSpinner" class="spinner" style="display: none;"></span>
+                            <span id="registerBtnText">Buat Akun</span>
+                            <span id="registerSpinner" class="spinner" style="display:none;"></span>
                         </button>
                     </form>
-
-                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">
-                            <strong style="color: var(--primary-light);">Password Requirements:</strong><br>
-                            • Minimum 8 characters<br>
-                            • Mix of letters, numbers recommended
-                        </p>
-                    </div>
                 </div>
+
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" style="margin-bottom: 4rem;">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Security Features</h2>
-                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
-                    Enterprise-grade cryptography algorithms protecting your data
-                </p>
-            </div>
-
+        <!-- Algoritma yang digunakan -->
+        <section id="features" style="margin-bottom: 2rem;">
+            <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Algoritma yang Digunakan</h2>
             <div class="grid grid-2">
+
                 <div class="card">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔐</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">AES-256-GCM</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">
-                        Symmetric encryption with authenticated encryption mode. Fast, secure, and prevents tampering with integrity checks.
+                    <h3 class="card-title" style="margin-bottom: 0.4rem;">AES-256-GCM</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-sub);">
+                        Enkripsi simetris dengan mode GCM (Galois/Counter Mode). Menghasilkan
+                        <strong>ciphertext</strong>, <strong>nonce</strong>, dan <strong>tag</strong> autentikasi
+                        untuk menjamin integritas data.
                     </p>
                 </div>
 
                 <div class="card">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔑</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">RSA-4096</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">
-                        Asymmetric encryption with 4096-bit keys. Secure key exchange and digital signatures for authentication.
+                    <h3 class="card-title" style="margin-bottom: 0.4rem;">RSA-4096</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-sub);">
+                        Enkripsi asimetris dengan kunci 4096-bit. Digunakan untuk
+                        <strong>enkripsi kunci AES</strong> (key wrapping) dan
+                        <strong>tanda tangan digital</strong> pada token autentikasi.
                     </p>
                 </div>
 
                 <div class="card">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Hybrid Encryption</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">
-                        Combines RSA security with AES performance. Best of both worlds for optimal encryption speed and safety.
+                    <h3 class="card-title" style="margin-bottom: 0.4rem;">Hybrid Encryption</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-sub);">
+                        RSA mengenkripsi kunci AES yang di-generate secara acak.
+                        AES mengenkripsi pesan. Menggabungkan keamanan RSA dengan
+                        kecepatan AES.
                     </p>
                 </div>
 
                 <div class="card">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">⏱️</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Token Authentication</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">
-                        Secure session management with 1-hour token expiry. PBKDF2 password hashing with 100,000 iterations.
+                    <h3 class="card-title" style="margin-bottom: 0.4rem;">PBKDF2 + Token</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-sub);">
+                        Password di-hash dengan PBKDF2-SHA256 (100.000 iterasi).
+                        Token autentikasi ditandatangani secara digital dengan RSA
+                        dan berlaku selama 1 jam.
                     </p>
                 </div>
+
             </div>
         </section>
 
-        <!-- API Info Section -->
-        <section style="margin-bottom: 4rem;">
-            <div class="card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2)); border-color: rgba(99, 102, 241, 0.3);">
-                <div style="text-align: center;">
-                    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Developer API</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                        Integrate secure authentication into your applications with our REST API
-                    </p>
-                    
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="/api/info" class="btn btn-primary">
-                            📚 API Documentation
-                        </a>
-                        <a href="/api/keys/public" class="btn btn-secondary">
-                            🔑 Get Public Key
-                        </a>
-                        <a href="/health" class="btn btn-secondary">
-                            ✅ Health Check
-                        </a>
-                    </div>
+        <!-- API Endpoints -->
+        <section style="margin-bottom: 2rem;">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">API Endpoints</h2>
+                    <p class="card-subtitle">Contoh penggunaan REST API</p>
+                </div>
 
-                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 12px; text-align: left;">
-                        <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem;">Quick Example:</p>
-                        <pre style="color: var(--primary-light); font-size: 0.875rem; overflow-x: auto;"><code>curl -X POST /api/auth/login \
+                <pre class="mono-block">POST /api/auth/register   — Daftar user baru
+POST /api/auth/login      — Login, dapatkan token
+POST /api/auth/verify     — Verifikasi token
+POST /api/message/send    — Kirim pesan terenkripsi
+POST /api/message/decrypt — Dekripsi pesan (demo)
+GET  /api/keys/public     — Ambil public key server
+GET  /api/keys/private    — Ambil private key (demo)</pre>
+
+                <div style="margin-top: 1rem;">
+                    <p class="section-label">Contoh login</p>
+                    <pre class="mono-block">curl -X POST /api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username": "alice", "password": "alice_secret_123"}'</code></pre>
-                    </div>
+  -d '{"username": "alice", "password": "alice_secret_123"}'</pre>
+                </div>
+
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="/api/info" target="_blank" class="btn btn-secondary">API Info</a>
+                    <a href="/api/keys/public" target="_blank" class="btn btn-secondary">Public Key</a>
+                    <a href="/health" target="_blank" class="btn btn-secondary">Health Check</a>
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer style="text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 0.875rem;">
-            <p>
-                🔥 Built with Flask + cryptography library | 
-                ⚡ Deployed on Railway | 
-                🔐 Military-grade encryption
-            </p>
-            <p style="margin-top: 0.5rem;">
-                CryptoAuth v1.0.0 © 2026
-            </p>
+        <footer style="padding: 1.5rem 0; color: var(--text-muted); font-size: 0.8125rem; border-top: 1px solid var(--border);">
+            CryptoAuth v1.0.0 &mdash; Flask + cryptography &mdash; Tugas Keamanan Jaringan
         </footer>
+
     </div>
 
     <script src="/static/js/app.js"></script>
