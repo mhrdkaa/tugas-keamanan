@@ -2,8 +2,9 @@
 CryptoAuth API Server - Simple Flask app for Railway deployment
 Demonstrates authentication + encrypted messaging
 """
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import json
+import os
 from crypto_auth import AuthServer, AuthClient, HybridEncryptor
 
 app = Flask(__name__)
@@ -261,12 +262,24 @@ def info():
 
 @app.errorhandler(404)
 def not_found(error):
+    # Jangan return JSON untuk static files — kembalikan 404 HTML biasa
+    if request.path.startswith('/static/'):
+        return f'404 Not Found: {request.path}', 404
     return jsonify({'error': 'Endpoint not found'}), 404
 
 
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.after_request
+def set_cache_headers(response):
+    """Matikan Cloudflare cache untuk static files agar 404 tidak ter-cache."""
+    if request.path.startswith('/static/'):
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+    return response
 
 
 if __name__ == '__main__':
