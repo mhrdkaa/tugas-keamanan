@@ -104,7 +104,7 @@ def login():
     
     return jsonify({
         'status': 'success',
-        'token': token.to_json(),
+        'token': json.loads(token.to_json()),
         'user_id': username,
         'expires_in': 3600,
     }), 200
